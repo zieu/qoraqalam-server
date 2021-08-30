@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../User/UserModel";
 
-type UserData = {
+export type UserData = {
   username: string;
   email: string;
   password: string;
@@ -26,7 +26,7 @@ function Auth() {
     } catch (error) {
       return {
         success: false,
-        error: error.message,
+        // error: error.message,
       };
     }
   };
@@ -62,7 +62,7 @@ function Auth() {
     } catch (error) {
       return {
         success: false,
-        error: error.message,
+        // error: error.message,
       };
     }
   };
@@ -86,7 +86,6 @@ function Auth() {
         return {
           success: false,
           error: "Username or password invalid!",
-          token,
         };
       }
 
@@ -94,11 +93,12 @@ function Auth() {
         success: true,
         status: 200,
         user,
+        token,
       };
     } catch (error) {
       return {
         success: false,
-        error: error.message,
+        // error: error.message,
       };
     }
   };
