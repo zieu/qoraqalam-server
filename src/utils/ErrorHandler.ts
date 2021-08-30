@@ -1,3 +1,3 @@
 class ErrorHandler {
-  getErrorMessage(errorMessage: string) {}
+    getErrorMessage(errorMessage: string) {}
 }

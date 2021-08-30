@@ -1,25 +1,28 @@
 {
-  "name": "qoraqalam-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon src/server.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@types/bcryptjs": "^2.4.2",
-    "@types/express": "^4.17.13",
-    "@types/jsonwebtoken": "^8.5.5",
-    "@types/mongoose": "^5.11.97",
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.2",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.2"
-  }
+    "name": "qoraqalam-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon src/server.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@types/bcryptjs": "^2.4.2",
+        "@types/express": "^4.17.13",
+        "@types/jsonwebtoken": "^8.5.5",
+        "@types/mongoose": "^5.11.97",
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.0.2",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.2"
+    },
+    "devDependencies": {
+        "prettier": "^2.3.2"
+    }
 }
