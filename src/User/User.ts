@@ -12,7 +12,7 @@ export function UserModule() {
     } catch (error) {
       return {
         success: false,
-        error: error.message,
+        // error: error.message,
       };
     }
   };
@@ -22,12 +22,13 @@ export function UserModule() {
       const user = await User.findOne({ username });
       return {
         success: true,
+        user,
         status: 200,
       };
     } catch (error) {
       return {
         success: false,
-        error: error.message,
+        // error: error.message,
       };
     }
   };
