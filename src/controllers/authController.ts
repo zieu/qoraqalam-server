@@ -15,8 +15,9 @@ export const signup = async (req: Request, res: Response) => {
 export const loginByEmail = async (req: Request, res: Response) => {
   const { emailOrUsername, password } = req.body;
   const doc = await auth().loginByEmail(emailOrUsername, password);
+  console.log("STATUS", doc);
 
-  res.json({
+  res.status(doc.status!).json({
     doc,
   });
 };
@@ -25,7 +26,7 @@ export const loginByUsername = async (req: Request, res: Response) => {
   const { emailOrUsername, password } = req.body;
   const doc = await auth().loginByUsername(emailOrUsername, password);
 
-  res.json({
+  res.status(doc.status!).json({
     doc,
   });
 };
@@ -58,6 +59,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
   const decoded: Decoded = await verify(token, process.env.JWT_SECRET!);
 
   const currUser = await UserModule().getUserById(decoded.id);
+  console.log(currUser);
 
   if (!currUser)
     res.status(401).json({

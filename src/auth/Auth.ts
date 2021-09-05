@@ -39,15 +39,17 @@ function Auth() {
         return {
           success: false,
           error: "Username or password invalid!",
+          status: 404,
         };
       }
 
-      const isMatch = bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
         return {
           success: false,
           error: "Username or password invalid!",
+          status: 404,
         };
       }
 
@@ -75,10 +77,20 @@ function Auth() {
         return {
           success: false,
           error: "Username or password invalid!",
+          status: 404,
         };
       }
 
-      const isMatch = bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
+      console.log("ISMATCH", isMatch);
+
+      if (!isMatch) {
+        return {
+          success: false,
+          error: "Username or password invalid!",
+          status: 404,
+        };
+      }
 
       const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: "30d" });
 
