@@ -9,7 +9,7 @@ export function UserModule() {
         status: 200,
         user,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         success: false,
         // error: error.message,
@@ -25,7 +25,7 @@ export function UserModule() {
         user,
         status: 200,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         success: false,
         // error: error.message,
