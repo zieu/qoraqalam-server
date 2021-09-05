@@ -31,7 +31,7 @@ function Auth() {
     }
   };
 
-  const loginByEmail = async ({password, email}: Pick<UserData, "email" | "password">) => {
+  const loginByEmail = async ({ password, email }: Pick<UserData, "email" | "password">) => {
     try {
       const user = await User.findOne({ email });
 
@@ -44,7 +44,6 @@ function Auth() {
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
-
 
       if (!isMatch) {
         return {
@@ -70,7 +69,7 @@ function Auth() {
     }
   };
 
-  const loginByUsername = async ({password, username}: Pick<UserData, "username" | "password">) => {
+  const loginByUsername = async ({ password, username }: Pick<UserData, "username" | "password">) => {
     try {
       const user = await User.findOne({ username });
 
