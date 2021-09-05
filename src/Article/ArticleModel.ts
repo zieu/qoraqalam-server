@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 export type Article = Document & {
   content: string;
@@ -25,3 +25,5 @@ export const ArticleSchema = new Schema<Article>(
   },
   { timestamps: true },
 );
+
+export default model<Article>("Article", ArticleSchema);

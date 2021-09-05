@@ -31,7 +31,7 @@ function Auth() {
     }
   };
 
-  const loginByEmail = async ({password, email}: Pick<UserData, "email" | "password">) => {
+  const loginByEmail = async ({ password, email }: Pick<UserData, "email" | "password">) => {
     try {
       const user = await User.findOne({ email });
 
@@ -41,7 +41,7 @@ function Auth() {
           error: "Username or password invalid!",
         };
       }
-      
+
       const isMatch = bcrypt.compare(password, user.password);
 
       if (!isMatch) {
@@ -67,7 +67,7 @@ function Auth() {
     }
   };
 
-  const loginByUsername = async ({password, username}: Pick<UserData, "username" | "password">) => {
+  const loginByUsername = async ({ password, username }: Pick<UserData, "username" | "password">) => {
     try {
       const user = await User.findOne({ username });
 
