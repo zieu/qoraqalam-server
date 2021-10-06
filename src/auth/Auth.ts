@@ -13,7 +13,6 @@ function Auth() {
   const signup = async (userData: UserData) => {
     try {
       const user = await User.create(userData);
-      console.log(user);
 
       const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: "30d" });
 
