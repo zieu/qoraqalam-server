@@ -1,14 +1,14 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
-export type Article = Document & {
+export type ArticleType = Document & {
   content: string;
   title: string;
-  Tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  Tags?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
-export const ArticleSchema = new Schema<Article>(
+const ArticleSchema = new Schema<ArticleType>(
   {
     content: {
       type: String,
@@ -20,8 +20,9 @@ export const ArticleSchema = new Schema<Article>(
     },
     Tags: {
       type: [String],
-      required: true,
     },
   },
   { timestamps: true },
 );
+
+export default model<ArticleType>("Article", ArticleSchema);

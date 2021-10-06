@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { promisify } from "util";
 import auth from "../auth/Auth";
-import { UserModule } from "../User/User";
+import { verifyToken } from "../utils/verify";
+import { getToken } from "../utils/getToken";
 
 export const signup = async (req: Request, res: Response) => {
   const doc = await auth().signup(req.body);
@@ -32,14 +31,9 @@ export const loginByUsername = async (req: Request, res: Response) => {
 };
 
 export const protect = async (req: Request, res: Response, next: NextFunction) => {
-  let token: string | undefined;
   const header = req.headers.authorization;
 
-  if (header && header.startsWith("Bearer")) {
-    token = header.split(" ")[1];
-  } else {
-    token = undefined;
-  }
+  const token = getToken(header);
 
   if (!token) {
     res.status(401).json({
@@ -49,24 +43,11 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
     });
   }
 
-  const verify = promisify(jwt.verify);
+  const currUser = await verifyToken(token);
 
-  type Decoded = {
-    id: string;
-  };
-
-  // @ts-ignore
-  const decoded: Decoded = await verify(token, process.env.JWT_SECRET!);
-
-  const currUser = await UserModule().getUserById(decoded.id);
-  console.log(currUser);
-
-  if (!currUser)
-    res.status(401).json({
-      success: false,
-      status: 401,
-      error: "Unauthorized!",
-    });
+  if (!currUser.success) {
+    res.status(currUser.status!).json(currUser);
+  }
 
   next();
 };

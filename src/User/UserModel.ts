@@ -32,7 +32,6 @@ const UserSchema = new Schema<IUser>(
     },
     avatar: {
       type: String,
-      default: undefined,
     },
     articles: [
       {
@@ -54,6 +53,7 @@ UserSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     const hash = await bcrypt.hash(this.password, 12);
     this.password = hash;
+    this.avatar = `https://avatars.dicebear.com/api/bottts/${(this as unknown as IUser).username}.svg`;
     next();
   }
   next();

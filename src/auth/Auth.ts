@@ -7,13 +7,13 @@ export type UserData = {
   email: string;
   password: string;
   passwordConfirm: string;
-  avatar?: string;
 };
 
 function Auth() {
   const signup = async (userData: UserData) => {
     try {
       const user = await User.create(userData);
+      console.log(user);
 
       const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: "30d" });
 
@@ -82,7 +82,6 @@ function Auth() {
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
-      console.log("ISMATCH", isMatch);
 
       if (!isMatch) {
         return {

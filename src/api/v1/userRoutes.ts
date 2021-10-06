@@ -1,11 +1,11 @@
 import express from "express";
 
-import { getUserById, getUserByUsername } from "../../controllers/userController";
-import { protect } from "../../controllers/authController";
+import { getUserById, getUserByUsername, getUser } from "../../controllers/userController";
 
 const router = express.Router();
 
-router.route("/:id").get(protect, getUserById);
-router.route("/user/:username").get(protect, getUserByUsername);
+router.route("/user").get(getUser);
+router.route("/user/id/:id").get(getUserById);
+router.route("/user/:username").get(getUserByUsername);
 
 export default router;
