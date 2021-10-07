@@ -14,7 +14,6 @@ export const signup = async (req: Request, res: Response) => {
 export const loginByEmail = async (req: Request, res: Response) => {
   const { emailOrUsername, password } = req.body;
   const doc = await auth().loginByEmail(emailOrUsername, password);
-  console.log("STATUS", doc);
 
   res.status(doc.status!).json({
     doc,
