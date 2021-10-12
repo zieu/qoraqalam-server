@@ -1,6 +1,12 @@
-import Article, { ArticleType } from "./ArticleModel";
+import Article from "./ArticleModel";
 import { verifyToken } from "../utils/verify";
 import { getToken } from "../utils/getToken";
+
+type ArticleType = {
+  content: string;
+  title: string;
+  tags?: string[];
+};
 
 function ArticleModule() {
   const createArticle = async (articleData: ArticleType) => {

@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
-import authRoutes from "./api/v1/authRoutes";
-import userRoutes from "./api/v1/userRoutes";
+import { authRoutes, articleRoutes, userRoutes } from "./api/v1";
 
 export const app = express();
 
@@ -19,3 +18,4 @@ app.use(function (req, res, next) {
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/articles", articleRoutes);
