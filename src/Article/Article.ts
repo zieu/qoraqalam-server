@@ -24,8 +24,24 @@ function ArticleModule() {
     }
   };
 
+  const getArticleById = async (id: string) => {
+    try {
+      const article = await Article.findById(id);
+      return {
+        succes: true,
+        status: 200,
+        article,
+      };
+    } catch (error) {
+      return {
+        success: false,
+      };
+    }
+  };
+
   return {
     createArticle,
+    getArticleById,
   };
 }
 

@@ -21,3 +21,9 @@ export const createArticle = async (req: Request, res: Response) => {
 
   res.json(article);
 };
+
+export const getArticleById = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const article = await articleModule().getArticleById(id);
+  res.json(article);
+};
