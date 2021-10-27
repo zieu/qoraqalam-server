@@ -3,7 +3,9 @@ import { model, Schema } from "mongoose";
 export type ArticleType = Document & {
   content: string;
   title: string;
-  Tags?: string[];
+  tags?: string[];
+  isPublished: boolean;
+  author: Schema.Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -18,8 +20,17 @@ const ArticleSchema = new Schema<ArticleType>(
       type: String,
       required: true,
     },
-    Tags: {
+    tags: {
       type: [String],
+    },
+    isPublished: {
+      type: Boolean,
+      default: false,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
   },
   { timestamps: true },

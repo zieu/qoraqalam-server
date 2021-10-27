@@ -1,6 +1,5 @@
 import Article from "./ArticleModel";
-import { verifyToken } from "../utils/verify";
-import { getToken } from "../utils/getToken";
+import { Schema } from "mongoose";
 
 type ArticleType = {
   content: string;
@@ -9,9 +8,9 @@ type ArticleType = {
 };
 
 function ArticleModule() {
-  const createArticle = async (articleData: ArticleType) => {
+  const createArticle = async (articleData: ArticleType, userId: Schema.Types.ObjectId) => {
     try {
-      const article = await Article.create(articleData);
+      const article = await Article.create({ ...articleData, author: userId });
 
       return {
         success: true,

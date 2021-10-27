@@ -1,10 +1,23 @@
 import { Request, Response } from "express";
 import articleModule from "../Article/Article";
+import { getToken } from "../utils/getToken";
+import { verifyToken } from "../utils/verify";
 
 export const createArticle = async (req: Request, res: Response) => {
   const { content, title, tags } = req.body;
+  const header = req.headers.authorization;
+  const token = getToken(header);
+  const doc = await verifyToken(token);
 
-  const article = articleModule().createArticle({ content, title, tags });
+  // @ts-ignore
+  if (!doc.success) {
+    return {
+      success: false,
+      status: 401,
+    };
+  }
+
+  const article = await articleModule().createArticle({ content, title }, doc?.user?._id!);
 
   res.json(article);
 };

@@ -1,9 +1,20 @@
-import User from "./UserModel";
+import User, { IUser } from "./UserModel";
 
 import { verifyToken } from "../utils/verify";
 
+type SuccessType = {
+  success: true;
+  status: number;
+  user: IUser | null;
+};
+
+type FailType = {
+  success: false;
+  status: number;
+};
+
 export function UserModule() {
-  const getUserById = async (id: string) => {
+  const getUserById = async (id: string): Promise<SuccessType | FailType> => {
     try {
       const user = await User.findById(id);
       return {
@@ -14,6 +25,7 @@ export function UserModule() {
     } catch (error) {
       return {
         success: false,
+        status: 401,
         // error: error.message,
       };
     }
