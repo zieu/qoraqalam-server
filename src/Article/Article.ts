@@ -40,9 +40,25 @@ function ArticleModule() {
     }
   };
 
+  const getUserArticles = async (userId: Schema.Types.ObjectId) => {
+    try {
+      const articles = await Article.find({ author: userId, isPublished: true });
+      return {
+        success: true,
+        status: 200,
+        articles,
+      };
+    } catch (error) {
+      return {
+        success: false,
+      };
+    }
+  };
+
   return {
     createArticle,
     getArticleById,
+    getUserArticles,
   };
 }
 
