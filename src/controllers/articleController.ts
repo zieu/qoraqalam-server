@@ -4,7 +4,7 @@ import { getToken } from "../utils/getToken";
 import { verifyToken } from "../utils/verify";
 
 export const createArticle = async (req: Request, res: Response) => {
-  const { content, title, tags } = req.body;
+  const { content, title, isPublished } = req.body;
   const header = req.headers.authorization;
   const token = getToken(header);
   const doc = await verifyToken(token);
@@ -17,7 +17,7 @@ export const createArticle = async (req: Request, res: Response) => {
     };
   }
 
-  const article = await articleModule().createArticle({ content, title }, doc?.user?._id!);
+  const article = await articleModule().createArticle({ content, title, isPublished }, doc?.user?._id!);
 
   res.json(article);
 };
