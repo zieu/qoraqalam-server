@@ -13,8 +13,10 @@ type FailType = {
   status: number;
 };
 
+type ResponseType = Promise<SuccessType | FailType>;
+
 export function UserModule() {
-  const getUserById = async (id: string): Promise<SuccessType | FailType> => {
+  const getUserById = async (id: string): ResponseType => {
     try {
       const user = await User.findById(id);
       return {
@@ -31,29 +33,30 @@ export function UserModule() {
     }
   };
 
-  const getUserByUsername = async (username: string) => {
+  const getUserByUsername = async (username: string): ResponseType => {
     try {
       const user = await User.findOne({ username });
       return {
         success: true,
-        user,
         status: 200,
+        user,
       };
     } catch (error) {
       return {
         success: false,
+        status: 404,
         // error: error.message,
       };
     }
   };
 
-  const getUser = async (token: string | undefined) => {
+  const getUser = async (token: string | undefined): ResponseType => {
     try {
       if (!token) {
         return {
           success: false,
           status: 401,
-          message: "Unauhtorized!",
+          // message: "Unauhtorized!",
         };
       }
 
@@ -63,6 +66,7 @@ export function UserModule() {
     } catch (error) {
       return {
         success: false,
+        status: 404,
       };
     }
   };
