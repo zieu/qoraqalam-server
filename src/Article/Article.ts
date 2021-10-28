@@ -42,7 +42,7 @@ function ArticleModule() {
 
   const getUserArticles = async (userId: Schema.Types.ObjectId) => {
     try {
-      const articles = await Article.find({ author: userId, isPublished: true });
+      const articles = await Article.find({ author: userId, isPublished: true }).select("title createdAt");
       return {
         success: true,
         status: 200,
