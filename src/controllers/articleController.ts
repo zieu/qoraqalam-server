@@ -27,3 +27,11 @@ export const getArticleById = async (req: Request, res: Response) => {
   const article = await articleModule().getArticleById(id);
   res.json(article);
 };
+
+export const getUserArticles = async (req: Request, res: Response) => {
+  const { id } = req.body;
+
+  const articles = await articleModule().getUserArticles(id);
+
+  res.json(articles);
+};
