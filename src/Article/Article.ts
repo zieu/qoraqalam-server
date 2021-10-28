@@ -5,6 +5,7 @@ type ArticleType = {
   content: string;
   title: string;
   tags?: string[];
+  isPublished?: boolean;
 };
 
 function ArticleModule() {
