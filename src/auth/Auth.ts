@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import User from "../User/UserModel";
+
+import User, { IUser } from "../User/UserModel";
+import { STATUS_CODES } from "../utils/statusCodes";
 
 export type UserData = {
   username: string;
@@ -9,8 +11,23 @@ export type UserData = {
   passwordConfirm: string;
 };
 
+type SuccessType = {
+  success: true;
+  status: number;
+  user: IUser | null;
+  token: string;
+};
+
+type FailType = {
+  success: false;
+  status: number;
+  error: string;
+};
+
+type ResponseType = Promise<SuccessType | FailType>;
+
 function Auth() {
-  const signup = async (userData: UserData) => {
+  const signup = async (userData: UserData): ResponseType => {
     try {
       const user = await User.create(userData);
 
@@ -18,14 +35,15 @@ function Auth() {
 
       return {
         success: true,
-        status: 201,
+        status: STATUS_CODES["CREATED"],
         user,
         token,
       };
     } catch (error) {
       return {
         success: false,
-        // error: error.message,
+        status: STATUS_CODES["BAD_REQUEST"],
+        error: "Bad Request!",
       };
     }
   };
@@ -37,8 +55,8 @@ function Auth() {
       if (!user) {
         return {
           success: false,
+          status: STATUS_CODES["NOT_FOUND"],
           error: "Username or password invalid!",
-          status: 404,
         };
       }
 
@@ -47,8 +65,8 @@ function Auth() {
       if (!isMatch) {
         return {
           success: false,
+          status: STATUS_CODES["BAD_REQUEST"],
           error: "Username or password invalid!",
-          status: 404,
         };
       }
 
@@ -56,14 +74,15 @@ function Auth() {
 
       return {
         success: true,
-        status: 200,
+        status: STATUS_CODES["OK"],
         user,
         token,
       };
     } catch (error) {
       return {
         success: false,
-        // error: error.message,
+        status: STATUS_CODES["BAD_REQUEST"],
+        error: "Bad Request!",
       };
     }
   };
@@ -75,8 +94,8 @@ function Auth() {
       if (!user) {
         return {
           success: false,
+          status: STATUS_CODES["NOT_FOUND"],
           error: "Username or password invalid!",
-          status: 404,
         };
       }
 
@@ -85,8 +104,8 @@ function Auth() {
       if (!isMatch) {
         return {
           success: false,
+          status: STATUS_CODES["BAD_REQUEST"],
           error: "Username or password invalid!",
-          status: 404,
         };
       }
 
@@ -95,20 +114,22 @@ function Auth() {
       if (!isMatch) {
         return {
           success: false,
+          status: STATUS_CODES["BAD_REQUEST"],
           error: "Username or password invalid!",
         };
       }
 
       return {
         success: true,
-        status: 200,
+        status: STATUS_CODES["OK"],
         user,
         token,
       };
     } catch (error) {
       return {
         success: false,
-        // error: error.message,
+        status: STATUS_CODES["BAD_REQUEST"],
+        error: "Username or password invalid!",
       };
     }
   };

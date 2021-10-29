@@ -1,6 +1,7 @@
 import User, { IUser } from "./UserModel";
 
 import { verifyToken } from "../utils/verify";
+import { STATUS_CODES } from "../utils/statusCodes";
 
 type SuccessType = {
   success: true;
@@ -21,13 +22,13 @@ export function UserModule() {
       const user = await User.findById(id);
       return {
         success: true,
-        status: 200,
+        status: STATUS_CODES["OK"],
         user,
       };
     } catch (error) {
       return {
         success: false,
-        status: 401,
+        status: STATUS_CODES["UNAUTHORIZED"],
         // error: error.message,
       };
     }
@@ -38,13 +39,13 @@ export function UserModule() {
       const user = await User.findOne({ username });
       return {
         success: true,
-        status: 200,
+        status: STATUS_CODES["OK"],
         user,
       };
     } catch (error) {
       return {
         success: false,
-        status: 404,
+        status: STATUS_CODES["NOT_FOUND"],
         // error: error.message,
       };
     }
@@ -55,7 +56,7 @@ export function UserModule() {
       if (!token) {
         return {
           success: false,
-          status: 401,
+          status: STATUS_CODES["UNAUTHORIZED"],
           // message: "Unauhtorized!",
         };
       }
@@ -66,7 +67,7 @@ export function UserModule() {
     } catch (error) {
       return {
         success: false,
-        status: 404,
+        status: STATUS_CODES["NOT_FOUND"],
       };
     }
   };
