@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
+
 import articleModule from "../Article/Article";
 import { getToken } from "../utils/getToken";
 import { verifyToken } from "../utils/verify";
+import { STATUS_CODES } from "../utils/statusCodes";
 
 export const createArticle = async (req: Request, res: Response) => {
   const { content, title, isPublished } = req.body;
@@ -13,19 +15,19 @@ export const createArticle = async (req: Request, res: Response) => {
   if (!doc.success) {
     return {
       success: false,
-      status: 401,
+      status: STATUS_CODES["UNAUTHORIZED"],
     };
   }
 
   const article = await articleModule().createArticle({ content, title, isPublished }, doc?.user?._id!);
 
-  res.json(article);
+  res.status(article.status).json(article);
 };
 
 export const getArticleById = async (req: Request, res: Response) => {
   const id = req.params.id;
   const article = await articleModule().getArticleById(id);
-  res.json(article);
+  res.status(article.status).json(article);
 };
 
 export const getUserArticles = async (req: Request, res: Response) => {
@@ -33,5 +35,5 @@ export const getUserArticles = async (req: Request, res: Response) => {
 
   const articles = await articleModule().getUserArticles(id);
 
-  res.json(articles);
+  res.status(articles.status).json(articles);
 };
