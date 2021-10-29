@@ -1,56 +1,75 @@
-import Article from "./ArticleModel";
 import { Schema } from "mongoose";
 
-type ArticleType = {
+import Article, { ArticleType } from "./ArticleModel";
+import { STATUS_CODES } from "../utils/statusCodes";
+
+type ArticleData = {
   content: string;
   title: string;
   tags?: string[];
   isPublished?: boolean;
 };
 
+type SuccessType = {
+  success: true;
+  status: number;
+  article?: ArticleType | null;
+  articles?: ArticleType[] | null;
+};
+
+type FailType = {
+  success: false;
+  status: number;
+};
+
+type ResponseType = Promise<SuccessType | FailType>;
+
 function ArticleModule() {
-  const createArticle = async (articleData: ArticleType, userId: Schema.Types.ObjectId) => {
+  const createArticle = async (articleData: ArticleData, userId: Schema.Types.ObjectId): ResponseType => {
     try {
       const article = await Article.create({ ...articleData, author: userId });
 
       return {
         success: true,
-        status: 201,
+        status: STATUS_CODES["CREATED"],
         article,
       };
     } catch (error) {
       return {
         success: false,
+        status: STATUS_CODES["BAD_REQUEST"],
       };
     }
   };
 
-  const getArticleById = async (id: string) => {
+  const getArticleById = async (id: string): ResponseType => {
     try {
       const article = await Article.findById(id);
       return {
-        succes: true,
-        status: 200,
+        success: true,
+        status: STATUS_CODES["OK"],
         article,
       };
     } catch (error) {
       return {
         success: false,
+        status: STATUS_CODES["NOT_FOUND"],
       };
     }
   };
 
-  const getUserArticles = async (userId: Schema.Types.ObjectId) => {
+  const getUserArticles = async (userId: Schema.Types.ObjectId): ResponseType => {
     try {
       const articles = await Article.find({ author: userId, isPublished: true }).select("title createdAt");
       return {
         success: true,
-        status: 200,
+        status: STATUS_CODES["OK"],
         articles,
       };
     } catch (error) {
       return {
         success: false,
+        status: STATUS_CODES["NOT_FOUND"],
       };
     }
   };
