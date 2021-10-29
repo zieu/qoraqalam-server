@@ -6,13 +6,13 @@ export const getUserById = async (req: Request, res: Response) => {
   console.log(req.params);
   const user = await UserModule().getUserById(req.params.id);
 
-  res.status(user.status!).json(user);
+  res.status(user.status).json(user);
 };
 
 export const getUserByUsername = async (req: Request, res: Response) => {
   const user = await UserModule().getUserByUsername(req.params.username);
 
-  res.status(user.status!).json(user);
+  res.status(user.status).json(user);
 };
 
 export const getUser = async (req: Request, res: Response) => {
@@ -21,5 +21,5 @@ export const getUser = async (req: Request, res: Response) => {
 
   const user = await UserModule().getUser(token);
 
-  res.json(user);
+  res.status(user.status).json(user);
 };
